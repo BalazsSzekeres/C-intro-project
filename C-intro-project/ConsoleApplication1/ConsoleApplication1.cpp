@@ -1,20 +1,68 @@
-// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <ctime>
+
+void PrintIntroduction(int Difficulty)
+{
+    std::cout << "\n\nYou have reached the pont of no return! For the time: " << Difficulty;
+    std::cout << "Answer for the C++ Gods:\n\n";
+}
+
+bool PlayGame(int Difficulty)
+{
+    PrintIntroduction(Difficulty);
+
+    // Generate Code
+    const int CodeA = rand() % Difficulty + Difficulty;
+    const int CodeB = rand() % Difficulty + Difficulty;
+    const int CodeC = rand() % Difficulty + Difficulty;
+
+    const int CodeSum = CodeA + CodeB + CodeC;
+    const int CodeProduct = CodeA * CodeB * CodeC;
+
+
+    // Print CodeSum and CodeProduct to the terminal
+    std::cout << "+ There are 3 numbers in the code";
+    std::cout << "\n+ The codes add-up to: " << CodeSum;
+    std::cout << "\n+ The codes multiply to give: " << CodeProduct << std::endl;
+
+    // Store player guess
+    int GuessA, GuessB, GuessC;
+    std::cin >> GuessA >> GuessB >> GuessC;
+
+    int GuessSum = GuessA + GuessB + GuessC;
+    int GuessProduct = GuessA * GuessB * GuessC;
+
+    // Check if the players guess is correct
+    if (GuessSum == CodeSum && GuessProduct == CodeProduct)
+    {
+        std::cout << "\n*** Well done agent! You have extracted a file! Keep going! ***";
+        return true;
+    }
+    else
+    {
+        std::cout << "\n*** You entered the wrong code! Careful agent! Try again! ***";
+        return false;
+    }
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    srand(time(NULL)); // create new random sequence based on time of day
+
+    int LevelDifficulty = 1;
+    int const MaxDifficulty = 5;
+
+    while (LevelDifficulty <= MaxDifficulty) // Loop game until all levels completed
+    {
+        bool bLevelComplete = PlayGame(LevelDifficulty);
+        std::cin.clear(); // Clears any errors
+        std::cin.ignore(); // Discards the buffer
+
+        if (bLevelComplete)
+        {
+            ++LevelDifficulty;
+        }
+    }
+    std::cout << "\n*** You live for an other day. Get out before I change my mind! ***\n";
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
